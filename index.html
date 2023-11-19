@@ -1,219 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Game</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #f0f0f0;
-      text-align: center;
-      background: rgba(0,0,0,0.7) url(https://t3.ftcdn.net/jpg/03/23/12/42/360_F_323124237_SfGqpttZqU2mrMm61VPSWA2tKvc95l9O.jpg);
-      background-size: cover;
-    }
-    h1 {
-      color: rgb(108, 187, 251); /* Change the font color here */
-      font-size: 50px;
-    }
-    h2{
-        color: rgb(212, 136, 136);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7) url(https://t3.ftcdn.net/jpg/03/23/12/42/360_F_323124237_SfGqpttZqU2mrMm61VPSWA2tKvc95l9O.jpg);
+            background-size: cover;
+        }
 
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      font-size: 14px;
-      cursor: pointer;
-      box-sizing: border-box;
-    }
+        h1 {
+            color: rgb(108, 187, 251);
+            /* Change the font color here */
+            font-size: 50px;
+        }
 
-    .button-container {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-    #question{
-        color: rgb(145, 253, 217);
-        font-size: 22px;
-    }
+        h2 {
+            color: rgb(212, 136, 136);
+        }
 
-    #answers-container {
-      text-align: left;
-      margin-top: 10px;
-      
-    }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
 
-    #answers-container button {
-      display: block;
-      width: 100%;
-      background-color: bisque;
-    }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
 
-    .correct {
-      color: green;
-    }
+        #question {
+            color: rgb(145, 253, 217);
+            font-size: 22px;
+        }
 
-    .incorrect {
-      color: red;
-    
-    }
-    .navigation{
-        color: black;
-        background-color: rgb(152, 218, 210);
-    }
-    #scoreDisplay {
-      color: rgb(78, 211, 78); /* Change the font color for the score message here */
-      font-size: 20px ;
-    }
-  </style>
+        #answers-container {
+            text-align: left;
+            margin-top: 10px;
+
+        }
+
+        #answers-container button {
+            display: block;
+            width: 100%;
+            background-color: bisque;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+
+        }
+
+        .navigation {
+            color: black;
+            background-color: rgb(152, 218, 210);
+        }
+
+        #scoreDisplay {
+            color: rgb(78, 211, 78);
+            /* Change the font color for the score message here */
+            font-size: 20px;
+        }
+
+        .musicWorld {
+            color: rgb(227, 227, 227);
+            font-size: 25px;
+            text-align: center;
+            background-color: rgb(209, 138, 138);
+        }
+
+        a {
+            color: rgb(186, 105, 6);
+            text-decoration: none;
+        }
+
+        #link {
+            font-size: 20px;
+        }
+
+        #intro {
+            color: white;
+        }
+    </style>
 </head>
+
 <body>
+    <div id="intro">
+        <center>
+            <table>
+                <thead>
+                    <tr>
+                        <th>10001172023 ||</th>
+                        <th>Mahak ||</th>
+                        <th>CB23130</th>
+                    </tr>
+                </thead>
+            </table>
+        </center>
+    </div>
 
-<div id="quiz-container">
-  <h1>General Knowledge Quiz</h1>
-  <p id="question"></p>
-  <div id="answers-container"></div>
-  <div class="button-container">
-    <button onclick="goToPreviousQuestion()" id="backButton" class="navigation" disabled>Back</button>
-    <button onclick="goToNextQuestion()" id="nextButton" class="navigation">Next</button>
-    <button onclick="submitQuiz()" id="submitButton" class="navigation" disabled>Submit</button>
-    <button onclick="resetQuiz()" class="navigation">Try Again</button>
-  </div>
-  <p id="scoreDisplay"></p>
-</div>
+    <div id="quiz-container">
+        <h1>General Knowledge Quiz</h1>
+        <p id="question"></p>
+        <div id="answers-container"></div>
+        <div class="button-container">
+            <button onclick="goToPreviousQuestion()" id="backButton" class="navigation" disabled>Back</button>
+            <button onclick="goToNextQuestion()" id="nextButton" class="navigation">Next</button>
+            <button onclick="submitQuiz()" id="submitButton" class="navigation" disabled>Submit</button>
+            <button onclick="resetQuiz()" class="navigation">Try Again</button>
+        </div>
+        <p id="scoreDisplay"></p>
+    </div>
 
-<script>
-  let currentQuestion = 0;
-  let score = 0;
-  let quizSubmitted = false;
+    <script>
+        let currentQuestion = 0;
+        let score = 0;
+        let quizSubmitted = false;
 
-  const questions = [
-    {
-      question: 'What is the capital of France?',
-      answers: ['Paris', 'Berlin', 'London', 'Rome'],
-      correctAnswer: 'Paris'
-    },
-    {
-      question: 'Which planet is known as the Red Planet?',
-      answers: ['Earth', 'Mars', 'Jupiter', 'Venus'],
-      correctAnswer: 'Mars'
-    },
-    {
-      question: 'What is the largest mammal in the world?',
-      answers: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
-      correctAnswer: 'Blue Whale'
-    },
-    {
-      question: 'Who wrote "Romeo and Juliet"?',
-      answers: ['Charles Dickens', 'William Shakespeare', 'Jane Austen', 'Leo Tolstoy'],
-      correctAnswer: 'William Shakespeare'
-    }
-  ];
+        const questions = [
+            {
+                question: 'What is the capital of France?',
+                answers: ['Paris', 'Berlin', 'London', 'Rome'],
+                correctAnswer: 'Paris'
+            },
+            {
+                question: 'Which planet is known as the Red Planet?',
+                answers: ['Earth', 'Mars', 'Jupiter', 'Venus'],
+                correctAnswer: 'Mars'
+            },
+            {
+                question: 'What is the largest mammal in the world?',
+                answers: ['Elephant', 'Blue Whale', 'Giraffe', 'Hippopotamus'],
+                correctAnswer: 'Blue Whale'
+            },
+            {
+                question: 'Who wrote "Romeo and Juliet"?',
+                answers: ['Charles Dickens', 'William Shakespeare', 'Jane Austen', 'Leo Tolstoy'],
+                correctAnswer: 'William Shakespeare'
+            }
+        ];
 
-  function checkAnswer(selectedAnswer) {
-    const correctAnswer = questions[currentQuestion].correctAnswer;
-    const answersContainer = document.getElementById('answers-container');
-    const buttons = answersContainer.getElementsByTagName('button');
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = questions[currentQuestion].correctAnswer;
+            const answersContainer = document.getElementById('answers-container');
+            const buttons = answersContainer.getElementsByTagName('button');
 
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].removeEventListener('click', clickHandler);
-      if (buttons[i].textContent === correctAnswer) {
-        buttons[i].classList.add('correct');
-      } else {
-        buttons[i].classList.add('incorrect');
-      }
-    }
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].removeEventListener('click', clickHandler);
+                if (buttons[i].textContent === correctAnswer) {
+                    buttons[i].classList.add('correct');
+                } else {
+                    buttons[i].classList.add('incorrect');
+                }
+            }
 
-    if (!quizSubmitted) {
-      if (selectedAnswer === correctAnswer) {
-        score++;
-      }
-      enableNavigationButtons();
-    }
-  }
+            if (!quizSubmitted) {
+                if (selectedAnswer === correctAnswer) {
+                    score++;
+                }
+                enableNavigationButtons();
+            }
+        }
 
-  function clickHandler() {
-    const selectedAnswer = this.textContent;
-    checkAnswer(selectedAnswer);
-  }
+        function clickHandler() {
+            const selectedAnswer = this.textContent;
+            checkAnswer(selectedAnswer);
+        }
 
-  function displayQuestion() {
-    const questionContainer = document.getElementById('question');
-    const answersContainer = document.getElementById('answers-container');
-    const currentQuestionObj = questions[currentQuestion];
+        function displayQuestion() {
+            const questionContainer = document.getElementById('question');
+            const answersContainer = document.getElementById('answers-container');
+            const currentQuestionObj = questions[currentQuestion];
 
-    questionContainer.textContent = `Question ${currentQuestion + 1}: ${currentQuestionObj.question}`;
+            questionContainer.textContent = `Question ${currentQuestion + 1}: ${currentQuestionObj.question}`;
 
-    answersContainer.innerHTML = '';
+            answersContainer.innerHTML = '';
 
-    currentQuestionObj.answers.forEach(answer => {
-      const button = document.createElement('button');
-      button.textContent = answer;
-      button.addEventListener('click', clickHandler);
-      answersContainer.appendChild(button);
-    });
+            currentQuestionObj.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.addEventListener('click', clickHandler);
+                answersContainer.appendChild(button);
+            });
 
-    enableNavigationButtons();
-  }
+            enableNavigationButtons();
+        }
 
-  function enableNavigationButtons() {
-    const backButton = document.getElementById('backButton');
-    const nextButton = document.getElementById('nextButton');
-    const submitButton = document.getElementById('submitButton');
+        function enableNavigationButtons() {
+            const backButton = document.getElementById('backButton');
+            const nextButton = document.getElementById('nextButton');
+            const submitButton = document.getElementById('submitButton');
 
-    backButton.disabled = currentQuestion === 0;
-    nextButton.disabled = currentQuestion === questions.length - 1;
-    submitButton.disabled = currentQuestion !== questions.length - 1 || quizSubmitted;
-  }
+            backButton.disabled = currentQuestion === 0;
+            nextButton.disabled = currentQuestion === questions.length - 1;
+            submitButton.disabled = currentQuestion !== questions.length - 1 || quizSubmitted;
+        }
 
-  function goToPreviousQuestion() {
-    currentQuestion--;
-    displayQuestion();
-  }
+        function goToPreviousQuestion() {
+            currentQuestion--;
+            displayQuestion();
+        }
 
-  function goToNextQuestion() {
-    currentQuestion++;
-    displayQuestion();
-  }
+        function goToNextQuestion() {
+            currentQuestion++;
+            displayQuestion();
+        }
 
-  function submitQuiz() {
-    quizSubmitted = true;
-    showResult();
-    enableNavigationButtons(); // Enable navigation buttons after submission
-  }
+        function submitQuiz() {
+            quizSubmitted = true;
+            showResult();
+            enableNavigationButtons(); // Enable navigation buttons after submission
+        }
 
-  function showResult() {
-    const quizContainer = document.getElementById('quiz-container');
-    const scoreDisplay = document.getElementById('scoreDisplay');
+        function showResult() {
+            const quizContainer = document.getElementById('quiz-container');
+            const scoreDisplay = document.getElementById('scoreDisplay');
 
-    scoreDisplay.textContent = `Your score is: ${score} out of ${questions.length}`;
+            scoreDisplay.textContent = `Your score is: ${score} out of ${questions.length}`;
 
-    quizContainer.innerHTML = `<h1>Quiz Completed!</h1>`;
-    quizContainer.appendChild(scoreDisplay);
+            quizContainer.innerHTML = `<h1>Quiz Completed!</h1>`;
+            quizContainer.appendChild(scoreDisplay);
 
-    const tryAgainButton = document.createElement('button');
-    tryAgainButton.textContent = 'Try Again';
-    tryAgainButton.addEventListener('click', function() {
-      resetQuiz();
-      displayQuestion(); // Added to display the first question again
-    });
-    quizContainer.appendChild(tryAgainButton);
-  }
+            const tryAgainButton = document.createElement('button');
+            tryAgainButton.textContent = 'Try Again';
+            tryAgainButton.addEventListener('click', function () {
+                resetQuiz();
+                displayQuestion(); // Added to display the first question again
+            });
+            quizContainer.appendChild(tryAgainButton);
+        }
 
-  function resetQuiz() {
-    currentQuestion = 0;
-    score = 0;
-    quizSubmitted = false;
-    displayQuestion(); // Ensure the first question is displayed after reset
-  }
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            quizSubmitted = false;
+            displayQuestion(); // Ensure the first question is displayed after reset
+        }
 
-  // Initial display of the first question
-  displayQuestion();
-</script>
+        // Initial display of the first question
+        displayQuestion();
+    </script><br>
+    <hr>
+    <div class="musicWorld">
+        <p> Wanna Explore our Blogging Site?<br>
+            <a href="https://mahak2005.github.io/Celestial-biscuit--week2/" id="link">Click here to go to Blogging
+                Site</a>
+    </div>
+    <hr>
 
 </body>
+
 </html>
